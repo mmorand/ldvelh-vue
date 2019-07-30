@@ -20,7 +20,11 @@ export default new Router({
     {
       path: '/book/:bookId/chapter/:chapterId',
       name: 'chapter',
-      component: () => import('./components/Chapter.vue')
+      component: () => import('./components/Chapter.vue'),
+      props: (route) => ({
+        bookId: route.params.bookId,
+        chapterId: route.params.chapterId
+      })
     }
   ]
 })

@@ -1,18 +1,19 @@
 <template>
     <div class="books">
+        <ModalCharacterCreation ref="characterModal"
+                                :book-id="bookId" />
         <b-container>
             <b-row>
                 <ul>
                     <li v-for="(book, key) in bookList"
-                        v-bind:key="key">
-                        <b-button v-b-modal="'character-creation'">{{ book.title }}</b-button>
+                        v-bind:key="key" class="mb-1">
+                        <b-button @click="openCharacterCreationModal(book.id)">
+                            {{ book.title }}
+                        </b-button>
                     </li>
                 </ul>
             </b-row>
         </b-container>
-        <b-modal id="character-creation" title="Création de personnage">
-            <CharacterCreation />
-        </b-modal>
     </div>
 </template>
 
@@ -23,21 +24,32 @@
     BRow,
     BButton
   } from 'bootstrap-vue'
-  import CharacterCreation from '../views/CharcterCreation'
+  import ModalCharacterCreation from './ModalCharacterCreation'
 
   export default {
     name: 'Books',
     data: () => ({
-      bookList
+      bookList,
+      bookId: null
     }),
     components: {
       BContainer,
       BRow,
       BButton,
-      CharacterCreation
+      ModalCharacterCreation
+    },
+    methods: {
+      openCharacterCreationModal(id) {
+        this.bookId = id
+        this.$refs.characterModal.show()
+      }
     }
   }
 </script>
 
 <style scoped>
+    li {
+        list-style: none;
+        display: grid;
+    }
 </style>
